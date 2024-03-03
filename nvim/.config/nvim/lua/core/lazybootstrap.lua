@@ -30,6 +30,9 @@ require("lazy").setup({
     tag = '0.1.5',
     dependencies = { "nvim-lua/plenary.nvim" }
   },
+  {
+    "mbbill/undotree"
+  },
   install = {
     colorscheme = { "nord" }
     }
