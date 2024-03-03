@@ -1,4 +1,4 @@
-# nvim-dots
-my neovim dotfiles 
+# dots
+my dotfiles 
 
 `stow --target=/home/(whoami) */`
