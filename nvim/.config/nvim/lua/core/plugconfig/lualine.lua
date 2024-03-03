@@ -5,6 +5,7 @@ require('lualine').setup {
     icons_enabled = true,
     theme = 'nord'
   },
+  extensions = {'quickfix', 'lazy'},
   sections = {
     lualine_x = {'filetype'},
     lualine_y = {'progress'},
@@ -15,7 +16,7 @@ require('lualine').setup {
   },
   tabline = {
     lualine_a = {'tabs'},
-    lualine_b = {'diff'},
+    lualine_b = {'hostname'},
     lualine_z = {'windows'}
   }
 }
