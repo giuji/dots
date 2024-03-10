@@ -12,7 +12,7 @@ require('lualine').setup {
     lualine_z = {'location'}
   },
   winbar = {
-    lualine_b = {'buffers'}
+    lualine_a = {'buffers'}
   },
   tabline = {
     lualine_a = {'tabs'},
