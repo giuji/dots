@@ -1,0 +1,7 @@
+[init]
+    defaultBranch = main
+[user]
+	name = giuji
+	email = 64275280+giuji@users.noreply.github.com
+[core]
+  editor = nvim

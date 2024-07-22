@@ -1,0 +1,40 @@
+#!/usr/bin/fish
+ 
+set foreground (xrdb -query | grep st.foreground | awk '{print$2}')
+set background (xrdb -query | grep st.background | awk '{print$2}')
+set green (xrdb -query | grep st.color2 | head -n 1 | awk '{print$2}')
+set yellow (xrdb -query | grep st.color3 | awk '{print$2}')
+set red (xrdb -query | grep st.color1 | head -n 1 | awk '{print$2}')
+set blue (xrdb -query | grep st.color4 | head -n 1 | awk  '{print$2}')
+ 
+echo '{"version":1}'
+echo '['
+echo '[]'
+ 
+while true
+ 
+  set date (date +'%H:%M')
+ 
+  set volumeLevel (pactl get-sink-volume @DEFAULT_SINK@ | head -n 1 | awk '{print $5}' | sed 's/%.*//')
+  set volumeMute (pactl get-sink-mute @DEFAULT_SINK@ | awk '{print $2}')
+ 
+  if test $volumeMute = yes
+    set volumeStatus MUTE
+    set volumeColor $yellow
+  else
+    set volumeStatus $volumeLevel
+    if test $volumeLevel -gt 80
+      set volumeColor $red
+    else
+      set volumeColor $green
+    end
+  end
+ 
+  echo -n ',['
+  echo -n "{\"name\":\"volume\",\"markup\":\"pango\",\"full_text\":\"Volume: <span foreground='$volumeColor'>$volumeStatus</span>\"},"
+  echo -n "{\"name\":\"time\",\"markup\":\"pango\",\"full_text\":\"<b>$date</b> \"}"
+  echo -n ']'
+  sleep 5
+  echo
+ 
+end
