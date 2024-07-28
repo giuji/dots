@@ -1,6 +1,6 @@
 # dots
 personal dotfiles, highly wip
 
-install with stow `stow --target=/home/$(whoami) */`
+managed with [puwa](https://github.com/giuji/puwa) 
 
 ![](screenshot.png)
