@@ -16,14 +16,11 @@ include mediakeys
 
 # Font for window titles. Will also be used by the bar unless a different font
 # is used in the bar {} block below.
-font pango:Tamzen
+font pango:{{{font_name}}}
 
 # Start XDG autostart .desktop files using dex. See also
 # https://wiki.archlinux.org/index.php/XDG_Autostart
 exec --no-startup-id dex --autostart --environment i3
-
-# Set wallpaper
-exec --no-startup-id feh --bg-scale ~/.config/i3/wall.png
 
 # Use Mouse+$mod to drag floating windows to their wanted position
 floating_modifier $mod
@@ -42,7 +39,7 @@ bindsym $mod+shift+d exec emacs
 bindsym $mod+q kill
 
 # start bemenu (a program launcher)
-bindsym $mod+d exec --no-startup-id ~/.local/bin/bmenu
+bindsym $mod+d exec --no-startup-id sh ~/.config/i3/menu
 
 # change focus
 bindsym $mod+$left focus left
@@ -176,14 +173,15 @@ gaps inner 8
 # Disable window titles
 default_border pixel 1
 
-# Bottom gaps is a pixel taller to hardcore a border for the bar in the wallpaper image lol
-gaps bottom 1
-
 # Xresources
 set_from_resource $background st.background #000000
 set_from_resource $foreground st.foreground #ffffff
 set_from_resource $gray st.color8 #808080
 set_from_resource $yellow st.color3 #fff000
+#set_from_resource $wallpaper st.color0 #c1c1c1
+
+# Set wallpaper
+exec --no-startup-id hsetroot -solid "#3b4252"
 
 # Borders
 client.focused $foreground $background $foreground $foreground $foreground
@@ -198,13 +196,13 @@ client.background $background
 bar {
 
     position bottom
-    height 28
+    height {{{bar_height}}}
 
     separator_symbol "-"
 
     Tray_padding 6
     
-    Status_command ~/.config/i3/status
+    Status_command fish ~/.config/i3/status
 
     colors {
         background $background

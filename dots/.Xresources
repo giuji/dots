@@ -1,4 +1,4 @@
-st.font: CaskaydiaMono Nerd Font:size=10
+st.font: {{{font_name}}}:size={{{font_size}}}
 st.borderpx: 10
 
 ! nord
