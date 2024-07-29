@@ -1,3 +1,3 @@
 xrdb -merge .Xresources &
-xcompmgr -f -D 4 &
+picom -c -f -l -18 -t -18 -o .3 &
 exec /usr/bin/dbus-run-session /usr/bin/i3

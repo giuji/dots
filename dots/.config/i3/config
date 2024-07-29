@@ -168,7 +168,7 @@ bindsym $mod+r mode "resize"
 #
 
 # Gaps
-gaps inner 8
+gaps inner 10
 
 # Disable window titles
 default_border pixel 1
@@ -178,10 +178,9 @@ set_from_resource $background st.background #000000
 set_from_resource $foreground st.foreground #ffffff
 set_from_resource $gray st.color8 #808080
 set_from_resource $yellow st.color3 #fff000
-#set_from_resource $wallpaper st.color0 #c1c1c1
 
 # Set wallpaper
-exec --no-startup-id hsetroot -solid "#3b4252"
+exec --no-startup-id hsetroot -solid "#{{{wallpaper}}}"
 
 # Borders
 client.focused $foreground $background $foreground $foreground $foreground
@@ -195,7 +194,7 @@ client.background $background
 #
 bar {
 
-    position bottom
+    position top
     height {{{bar_height}}}
 
     separator_symbol "-"

@@ -7,7 +7,6 @@ BAR_HEIGHT={{{bar_height}}}
 
 bemenu-run -p "run" \
 	   -i \
-	   -b \
 	   -H $BAR_HEIGHT \
 	   --fn $FONT \
 	   --tb "$BG" \
