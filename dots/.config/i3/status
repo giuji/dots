@@ -33,12 +33,28 @@ do
 	fi
     fi
 
-  echo -n ',['
-  echo -n "{\"name\":\"volume\",\"markup\":\"pango\",\"full_text\":\"Volume: <span foreground='$volumeColor'>$volumeStatus</span>\"},"
-  echo -n "{\"name\":\"time\",\"markup\":\"pango\",\"full_text\":\"<b>$date</b> \"}"
-  echo -n ']'
+    if [ -d /sys/class/power_supply/BAT0 ]; then
+	batteryLevel=$(cat /sys/class/power_supply/BAT0/capacity)
+	batteryStatus=$(cat /sys/class/power_supply/BAT0/status)
+	if [ $batteryStatus = "Charging" ]; then
+	    batteryColor=$YELLOW
+	elif [ $batteryLevel -lt 25 ]; then
+	    batteryColor=$RED
+	else
+	    batteryColor=$BLUE
+	fi	    
+    else
+	batteryLevel="No Battery"
+	batteryColor=$BLUE
+    fi
 
-  sleep $REFRESH_TIME
-  echo
+    echo -n ',['
+    echo -n "{\"name\":\"battery\",\"markup\":\"pango\",\"full_text\":\"Bat: <span foreground='$batteryColor'>$batteryLevel</span>\"},"
+    echo -n "{\"name\":\"volume\",\"markup\":\"pango\",\"full_text\":\"Volume: <span foreground='$volumeColor'>$volumeStatus</span>\"},"
+    echo -n "{\"name\":\"time\",\"markup\":\"pango\",\"full_text\":\"<b>$date</b> \"}"
+    echo -n ']'
+
+    sleep $REFRESH_TIME
+    echo
 
 done
