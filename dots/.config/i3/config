@@ -201,7 +201,7 @@ bar {
 
     Tray_padding 6
     
-    Status_command fish ~/.config/i3/status
+    Status_command sh ~/.config/i3/status
 
     colors {
         background $background

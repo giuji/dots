@@ -1,40 +1,44 @@
-#!/usr/bin/fish
- 
-set foreground (xrdb -query | grep st.foreground | awk '{print$2}')
-set background (xrdb -query | grep st.background | awk '{print$2}')
-set green (xrdb -query | grep st.color2 | head -n 1 | awk '{print$2}')
-set yellow (xrdb -query | grep st.color3 | awk '{print$2}')
-set red (xrdb -query | grep st.color1 | head -n 1 | awk '{print$2}')
-set blue (xrdb -query | grep st.color4 | head -n 1 | awk  '{print$2}')
- 
+#!/bin/sh
+# this is how u output json kid
+
+REFRESH_TIME=3
+
+FG=$(xrdb -query | grep st.foreground | awk '{print$2}')
+BG=$(xrdb -query | grep st.background | awk '{print$2}')
+GREEN=$(xrdb -query | grep st.color2 | head -n 1 | awk '{print$2}')
+YELLOW=$(xrdb -query | grep st.color3 | awk '{print$2}')
+RED=$(xrdb -query | grep st.color1 | head -n 1 | awk '{print$2}')
+BLUE=$(xrdb -query | grep st.color4 | head -n 1 | awk  '{print$2}')
+
 echo '{"version":1}'
 echo '['
 echo '[]'
- 
+
 while true
- 
-  set date (date +'%H:%M')
- 
-  set volumeLevel (pactl get-sink-volume @DEFAULT_SINK@ | head -n 1 | awk '{print $5}' | sed 's/%.*//')
-  set volumeMute (pactl get-sink-mute @DEFAULT_SINK@ | awk '{print $2}')
- 
-  if test $volumeMute = yes
-    set volumeStatus MUTE
-    set volumeColor $yellow
-  else
-    set volumeStatus $volumeLevel
-    if test $volumeLevel -gt 80
-      set volumeColor $red
+do
+    date=$(date +'%H:%M')
+
+    volumeLevel=$(pactl get-sink-volume @DEFAULT_SINK@ | head -n 1 | awk '{print $5}' | sed 's/%.*//')
+    volumeMute=$(pactl get-sink-mute @DEFAULT_SINK@ | awk '{print $2}')
+
+    if [ $volumeMute = "" ]; then
+	volumeStatus="MUTE"
+	volumeColor=$YELLOW
     else
-      set volumeColor $green
-    end
-  end
- 
+	volumeStatus=$volumeLevel
+	if [ $volumeLevel -gt 80 ]; then
+	    volumeColor=$RED
+	else
+	    volumeColor=$GREEN
+	fi
+    fi
+
   echo -n ',['
   echo -n "{\"name\":\"volume\",\"markup\":\"pango\",\"full_text\":\"Volume: <span foreground='$volumeColor'>$volumeStatus</span>\"},"
   echo -n "{\"name\":\"time\",\"markup\":\"pango\",\"full_text\":\"<b>$date</b> \"}"
   echo -n ']'
-  sleep 5
+
+  sleep $REFRESH_TIME
   echo
- 
-end
+
+done
