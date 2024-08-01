@@ -2,13 +2,12 @@
 BG=$(xrdb -query | grep st.background | awk '{print$2}')
 FG=$(xrdb -query | grep st.foreground | awk '{print$2}')
 ACCENT=$(xrdb -query | grep st.color2 | awk '{print$2}')
-FONT="{{{font_name}}} {{{font_size}}}"
 BAR_HEIGHT={{{bar_height}}}
 
 bemenu-run -p "run" \
 	   -i \
 	   -H $BAR_HEIGHT \
-	   --fn $FONT \
+	   --fn "{{{font_name}}} {{{font_size}}}" \
 	   --tb "$BG" \
 	   --fb "$BG" \
 	   --nb "$BG" \
