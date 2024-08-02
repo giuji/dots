@@ -21,7 +21,7 @@ do
     volumeLevel=$(pactl get-sink-volume @DEFAULT_SINK@ | head -n 1 | awk '{print $5}' | sed 's/%.*//')
     volumeMute=$(pactl get-sink-mute @DEFAULT_SINK@ | awk '{print $2}')
 
-    if [ $volumeMute = "" ]; then
+    if [ $volumeMute = "yes" ]; then
 	volumeStatus="MUTE"
 	volumeColor=$YELLOW
     else
